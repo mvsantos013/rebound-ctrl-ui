@@ -3,7 +3,7 @@
     <CrudTable
       title="Simulations"
       entity="Simulation"
-      createLabel="Create"
+      createLabel="Run"
       cache-key="table-simulations"
       dense
       selection="none"
@@ -23,6 +23,27 @@
       }"
       @onCreate="(item) => $emit('onCreate', item)"
     >
+      <q-spinner v-if="refreshing" size="sm" color="primary" class="ml-3" />
+
+      <!-- Override file column -->
+      <q-td
+        slot="body-cell-status"
+        slot-scope="props"
+        :props="props"
+        style="border-top: none !important"
+      >
+        <span
+          class="inline-block text-center px-3 text-white rounded-md text-xs w-20"
+          :class="{
+            'bg-indigo-400': props.row.status === 'running',
+            'bg-red-400': props.row.status === 'failed',
+            'bg-green-400': props.row.status === 'finished',
+          }"
+        >
+          {{ props.row.status }}
+        </span>
+      </q-td>
+
       <!-- Add custom action buttons -->
       <template #actions="{ row }">
         <span class="mr-2">
@@ -35,6 +56,7 @@
             class="text-gray-500"
             @click="() => $emit('onViewLogs', row)"
           />
+          <q-tooltip>Logs</q-tooltip>
         </span>
         <span class="mr-2">
           <q-btn
@@ -47,7 +69,19 @@
             class="text-gray-500"
             @click="() => $emit('onViewResults', row)"
           />
+          <q-tooltip>Details and results</q-tooltip>
         </span>
+      </template>
+
+      <!-- Override default CRUD form -->
+      <template #form="{ state, model, validateForm, submited }">
+        <SimulationForm
+          :state="state"
+          :model="model"
+          :columns="columns"
+          :validateForm="validateForm"
+          :submited="submited"
+        />
       </template>
     </CrudTable>
   </section>
@@ -56,10 +90,12 @@
 <script>
 import CrudTable from '@/components/common/table/crud-table/crud-table.vue'
 import SimulationsColumns from '@/components/home/simulations-columns.js'
+import SimulationForm from '@/components/home/simulation-form.vue'
 
 export default {
   components: {
     CrudTable,
+    SimulationForm,
   },
   props: {
     items: {
@@ -67,6 +103,10 @@ export default {
       default: () => [],
     },
     fetching: {
+      type: Boolean,
+      default: false,
+    },
+    refreshing: {
       type: Boolean,
       default: false,
     },
@@ -80,9 +120,9 @@ export default {
             'nelson1.rc.unesp.br',
             'ganimedes.rc.unesp.br',
           ],
-          simulationTypes: ['single', 'grid'],
+          simulationTypes: ['default', 'grid'],
           defaultHost: 'ganimedes.rc.unesp.br',
-          defaultSimulationType: 'grid',
+          defaultSimulationType: 'default',
         },
         this.$options.filters,
       ),

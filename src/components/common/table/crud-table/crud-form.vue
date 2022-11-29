@@ -15,7 +15,10 @@
           @submit="onSubmit"
           @validation-error="isFormValid = false"
         >
-          <slot name="form" v-bind="{ state, model, validateForm, submited }">
+          <slot
+            name="form"
+            v-bind="{ state, model, validateForm, submited, updateModel }"
+          >
             <!-- Form body -->
             <div v-if="isDialogMultipleDelete">
               Items with the following <em>{{ rowKey }}s </em> will be deleted:
@@ -347,6 +350,9 @@ export default {
     async validateForm() {
       const isValid = await this.$refs.form.validate()
       this.isFormValid = isValid
+    },
+    updateModel(model) {
+      this.model = model
     },
     onSubmit(e) {
       e.preventDefault()

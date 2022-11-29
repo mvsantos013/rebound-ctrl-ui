@@ -8,6 +8,7 @@
       dense
       selection="none"
       form-size="md"
+      :model.sync="model"
       :rows="items"
       :columns="columns"
       :loading="fetching"
@@ -25,12 +26,22 @@
     >
       <q-spinner v-if="refreshing" size="sm" color="primary" class="ml-3" />
 
-      <!-- Override file column -->
+      <!-- Override id column -->
+      <q-td
+        slot="body-cell-id"
+        slot-scope="props"
+        :props="props"
+        style="border-top: none"
+      >
+        {{ props.row.id.slice(0, 8) }}...
+      </q-td>
+
+      <!-- Override status column -->
       <q-td
         slot="body-cell-status"
         slot-scope="props"
         :props="props"
-        style="border-top: none !important"
+        style="border-top: none"
       >
         <span
           class="inline-block text-center px-3 text-white rounded-md text-xs w-20"
@@ -74,12 +85,13 @@
       </template>
 
       <!-- Override default CRUD form -->
-      <template #form="{ state, model, validateForm, submited }">
+      <template #form="{ state, model, validateForm, submited, updateModel }">
         <SimulationForm
           :state="state"
           :model="model"
           :columns="columns"
           :validateForm="validateForm"
+          :updateModel="updateModel"
           :submited="submited"
         />
       </template>
@@ -113,16 +125,18 @@ export default {
   },
   data() {
     return {
+      model: {},
       columns: SimulationsColumns(
         {
           hosts: [
             'cassini.rc.unesp.br',
             'nelson1.rc.unesp.br',
             'ganimedes.rc.unesp.br',
+            'hubble.rc.unesp.br',
           ],
           simulationTypes: ['default', 'grid'],
           defaultHost: 'ganimedes.rc.unesp.br',
-          defaultSimulationType: 'default',
+          defaultSimulationType: 'grid',
         },
         this.$options.filters,
       ),

@@ -107,10 +107,27 @@ export default {
     },
     async createSimulation(item) {
       this.loading = true
-      item.cores = parseInt(item.cores)
-      item.years = parseFloat(item.years)
-      item.num_logs = parseInt(item.num_logs)
-      item.ejection_max_distance = parseFloat(item.ejection_max_distance)
+      try {
+        item.cores = parseInt(item.cores)
+        item.years = parseFloat(item.years)
+        item.num_logs = parseInt(item.num_logs)
+        item.ejection_max_distance = parseFloat(item.ejection_max_distance)
+        if (item.simulation_type === 'grid') {
+          Object.keys(item.grid.particle).forEach((key) => {
+            const value = item.grid.particle[key]
+            if (typeof value === 'string' && value.includes('['))
+              item.grid.particle[key] = JSON.parse(value)
+            else item.grid.particle[key] = parseFloat(value)
+          })
+        }
+      } catch (e) {
+        this.$toast.error(
+          'Error while validating inputs. Check if the syntax is correct.',
+        )
+        this.loading = false
+        return
+      }
+
       const response = await api.post('/simulations', item)
       if (response.ok) {
         this.$toast.success('Simulation started successfully')

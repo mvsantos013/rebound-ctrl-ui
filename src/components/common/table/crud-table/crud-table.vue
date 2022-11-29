@@ -202,10 +202,10 @@
         @onModelChange="(model) => $emit('onModelChange', model)"
       >
         <!-- Form slot, can be overriden -->
-        <template #form="{ state, model, validateForm, submited }">
+        <template #form="{ state, model, validateForm, submited, updateModel }">
           <slot
             name="form"
-            v-bind="{ state, model, validateForm, submited }"
+            v-bind="{ state, model, validateForm, submited, updateModel }"
           ></slot>
         </template>
       </CrudForm>

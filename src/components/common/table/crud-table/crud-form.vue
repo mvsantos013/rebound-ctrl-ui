@@ -4,7 +4,11 @@
       <!-- Form header -->
       <q-card-section>
         <div class="text-h6">
-          {{ createLabel ? `${createLabel} ${entity}` : labels[state].title }}
+          {{
+            createLabel && isDialogCreate
+              ? `${createLabel} ${entity}`
+              : labels[state].title
+          }}
         </div>
       </q-card-section>
 
@@ -196,6 +200,7 @@
               :disable="submited"
             />
             <q-btn
+              v-if="!isDialogRead"
               :label="createLabel ? createLabel : labels[state].actionBtn"
               :color="
                 isDialogDelete || isDialogMultipleDelete
@@ -216,6 +221,7 @@
 <script>
 import { getRules } from '@/utils/utils'
 
+const DIALOG_READ = 'read'
 const DIALOG_CREATE = 'create'
 const DIALOG_UPDATE = 'update'
 const DIALOG_DELETE = 'delete'
@@ -278,6 +284,10 @@ export default {
       model: {},
       dialogOpen: false,
       labels: {
+        [DIALOG_READ]: {
+          title: this.entity + ' Details',
+          actionBtn: '',
+        },
         [DIALOG_CREATE]: {
           title: this.createLabel + ' new ' + this.entity,
           actionBtn: this.createLabel,
@@ -305,7 +315,7 @@ export default {
           cols: 2,
         },
         lg: {
-          width: '60rem',
+          width: '55rem',
           cols: 6,
         },
       },
@@ -314,6 +324,9 @@ export default {
     }
   },
   computed: {
+    isDialogRead() {
+      return this.state === DIALOG_READ
+    },
     isDialogCreate() {
       return this.state === DIALOG_CREATE
     },

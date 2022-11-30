@@ -6,6 +6,7 @@
       :refreshing="checkingSimulationsStatus"
       @onCreate="createSimulation"
       @onViewLogs="onViewLogs"
+      @onDownloadResults="onDownloadResults"
     />
 
     <q-dialog v-model="dialog.open" class="bg-white" full-width full-height>
@@ -150,6 +151,22 @@ export default {
             () => this.onViewLogs(item),
             10000,
           )
+      }
+      this.loading = false
+    },
+    async onDownloadResults(item) {
+      this.loading = true
+      const response = await api.get(
+        `/simulations/${item.id}/results?host=${item.host}`,
+        {
+          responseType: 'blob',
+          headers: {
+            Accept: 'application/tar+gzip',
+          },
+        },
+      )
+      if (response.ok) {
+        this.$toast.success('Results downloaded successfully')
       }
       this.loading = false
     },

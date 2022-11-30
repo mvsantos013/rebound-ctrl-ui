@@ -7,7 +7,7 @@
       cache-key="table-simulations"
       dense
       selection="none"
-      form-size="md"
+      form-size="lg"
       :model.sync="model"
       :rows="items"
       :columns="columns"
@@ -26,7 +26,7 @@
     >
       <q-spinner v-if="refreshing" size="sm" color="primary" class="ml-3" />
 
-      <!-- Override id column -->
+      <!-- Override id column  -->
       <q-td
         slot="body-cell-id"
         slot-scope="props"
@@ -69,18 +69,21 @@
           />
           <q-tooltip>Logs</q-tooltip>
         </span>
-        <span class="mr-2">
+
+        <span class="mr-3">
           <q-btn
-            icon="mdi-eye"
+            icon="mdi-download-outline"
             flat
             dense
             round
-            size="sm"
             :disable="fetching"
             class="text-gray-500"
-            @click="() => $emit('onViewResults', row)"
+            :class="{ invisible: row.status !== 'finished' }"
+            @click="() => $emit('onDownloadResults', row)"
           />
-          <q-tooltip>Details and results</q-tooltip>
+          <q-tooltip v-if="row.status === 'finished'">
+            Download simulation results
+          </q-tooltip>
         </span>
       </template>
 
@@ -136,7 +139,7 @@ export default {
           ],
           simulationTypes: ['default', 'grid'],
           defaultHost: 'ganimedes.rc.unesp.br',
-          defaultSimulationType: 'grid',
+          defaultSimulationType: 'default',
         },
         this.$options.filters,
       ),

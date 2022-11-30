@@ -10,7 +10,7 @@ export default function SimulationsColumns(params, filters) {
       visible: true,
       type: 'string',
       form: {
-        visible: 'update|delete',
+        visible: 'read|update|delete',
         editable: '',
         default: '',
         placeholder: null,
@@ -34,7 +34,7 @@ export default function SimulationsColumns(params, filters) {
       visible: true,
       type: 'string',
       form: {
-        visible: 'create|update|delete',
+        visible: 'read|create|update|delete',
         editable: 'create|update',
         default: '',
         placeholder: null,
@@ -58,7 +58,7 @@ export default function SimulationsColumns(params, filters) {
       visible: false,
       type: 'string',
       form: {
-        visible: 'create|update|delete',
+        visible: 'read|create|update|delete',
         editable: 'create|update',
         default: '',
         placeholder: null,
@@ -82,7 +82,7 @@ export default function SimulationsColumns(params, filters) {
       visible: true,
       type: 'string',
       form: {
-        visible: 'create|update|delete',
+        visible: 'read|create|update|delete',
         editable: 'create',
         default: params.defaultHost,
         placeholder: null,
@@ -107,7 +107,7 @@ export default function SimulationsColumns(params, filters) {
       visible: true,
       type: 'number',
       form: {
-        visible: 'update|delete',
+        visible: 'read|update|delete',
         editable: '',
         default: '',
         placeholder: null,
@@ -131,7 +131,7 @@ export default function SimulationsColumns(params, filters) {
       visible: true,
       type: 'string',
       form: {
-        visible: 'update|delete',
+        visible: 'read|update|delete',
         editable: '',
         default: '',
         placeholder: null,
@@ -155,7 +155,7 @@ export default function SimulationsColumns(params, filters) {
       visible: true,
       type: 'string',
       form: {
-        visible: 'create|update|delete',
+        visible: 'read|create|update|delete',
         editable: 'create|update',
         default: params.defaultSimulationType,
         placeholder: null,
@@ -180,7 +180,7 @@ export default function SimulationsColumns(params, filters) {
       visible: false,
       type: 'number',
       form: {
-        visible: 'create|update|delete',
+        visible: 'read|create|update|delete',
         editable: 'create',
         default: 16,
         placeholder: null,
@@ -204,7 +204,7 @@ export default function SimulationsColumns(params, filters) {
       visible: false,
       type: 'string',
       form: {
-        visible: 'create|update|delete',
+        visible: 'read|create|update|delete',
         editable: 'create',
         default: 'whfast',
         placeholder: null,
@@ -228,7 +228,7 @@ export default function SimulationsColumns(params, filters) {
       visible: true,
       type: 'number',
       form: {
-        visible: 'create|update|delete',
+        visible: 'read|create|update|delete',
         editable: 'create',
         default: 1000,
         placeholder: null,
@@ -252,7 +252,7 @@ export default function SimulationsColumns(params, filters) {
       visible: false,
       type: 'number',
       form: {
-        visible: 'create|update|delete',
+        visible: 'read|create|update|delete',
         editable: 'create',
         default: 50,
         placeholder: null,
@@ -276,7 +276,7 @@ export default function SimulationsColumns(params, filters) {
       visible: false,
       type: 'number',
       form: {
-        visible: 'create|update|delete',
+        visible: 'read|create|update|delete',
         editable: 'create',
         default: 20,
         placeholder: null,
@@ -300,7 +300,7 @@ export default function SimulationsColumns(params, filters) {
       visible: false,
       type: 'number',
       form: {
-        visible: 'create|update|delete',
+        visible: 'read|create|update|delete',
         editable: 'create',
         default: 0.001,
         placeholder: null,
@@ -324,7 +324,7 @@ export default function SimulationsColumns(params, filters) {
       visible: false,
       type: 'array',
       form: {
-        visible: 'create|update|delete',
+        visible: 'read|create|update|delete',
         editable: 'create',
         default: '[{"m": 1.0}]',
         placeholder: null,
@@ -348,7 +348,7 @@ export default function SimulationsColumns(params, filters) {
       visible: false,
       type: 'object',
       form: {
-        visible: 'create|update|delete',
+        visible: 'read|create|update|delete',
         editable: 'create',
         default:
           '{"N": 10, "particle": {"m": 0, "a": "[0.1, 1.5]", "e": "[0, 0.5]", "inc": 0, "Omega": 0, "omega": 0, "M": 0}}',
@@ -373,7 +373,7 @@ export default function SimulationsColumns(params, filters) {
       visible: true,
       type: 'string',
       form: {
-        visible: 'update|delete',
+        visible: 'read|update|delete',
         editable: '',
         default: '',
         placeholder: null,

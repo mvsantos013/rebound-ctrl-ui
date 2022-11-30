@@ -132,6 +132,20 @@
                   You don't have permission for this operation.
                 </q-tooltip>
               </span>
+
+              <span v-if="showReadButton" class="mr-2">
+                <q-btn
+                  icon="mdi-eye"
+                  flat
+                  dense
+                  round
+                  size="sm"
+                  :disable="loading"
+                  class="text-gray-500"
+                  @click="() => openReadDialog(row)"
+                />
+                <q-tooltip>Details</q-tooltip>
+              </span>
             </div>
           </q-td>
         </template>
@@ -296,6 +310,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    showReadButton: {
+      type: Boolean,
+      default: true,
+    },
     showCreateButton: {
       type: Boolean,
       default: true,
@@ -388,6 +406,11 @@ export default {
     )
   },
   methods: {
+    openReadDialog(item) {
+      this.item = JSON.parse(JSON.stringify(item))
+      this.dialogState = 'read'
+      this.dialogOpen = true
+    },
     openCreateDialog() {
       this.item = JSON.parse(JSON.stringify(this.defaultItem))
       this.dialogState = 'create'

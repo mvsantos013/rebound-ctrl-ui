@@ -1,6 +1,7 @@
 <template>
   <div class="relative">
     <section
+      v-if="['create', 'update'].includes(state)"
       class="flex items-center justify-end absolute w-full -m-16 mx-auto"
     >
       <q-input
@@ -177,7 +178,12 @@
       </div>
     </section>
 
-    <section v-if="model && Object.keys(model).length > 0" class="mb-6">
+    <section
+      v-if="
+        model && Object.keys(model).length > 0 && isFieldVisible('particles')
+      "
+      class="mb-6"
+    >
       <div class="bg-primary-400 text-white px-2 mb-2">Particles</div>
       <q-markup-table
         flat
@@ -191,7 +197,7 @@
             :key="index"
             class="text-left"
           >
-            <td style="border: none; width: 80px">{{ index + 1 }}°</td>
+            <td style="border: none; width: 100px">{{ index + 1 }}°</td>
             <td class="no-border">
               <q-input
                 v-model.number="particle.m"
@@ -265,6 +271,7 @@
           </tr>
         </tbody>
       </q-markup-table>
+
       <div v-if="isFieldEditable('particles')" class="flex items-center">
         <q-btn
           size="sm"
@@ -291,10 +298,11 @@
       v-if="
         model &&
         Object.keys(model).length > 0 &&
-        model.simulation_type == 'grid'
+        model.simulation_type == 'grid' &&
+        isFieldVisible('grid')
       "
     >
-      <div class="bg-primary-400 text-white px-2 mb-2">Grid Options</div>
+      <div class="bg-primary-400 text-white px-2 mb-3">Grid Options</div>
       <div class="grid grid-cols-3 gap-3 mb-3">
         <q-input
           v-model.number="model.grid.N"
@@ -421,14 +429,17 @@ export default {
   },
   mounted() {
     this.loadTemplates()
-    this.model.particles = JSON.parse(this.model.particles)
-    this.model.grid = JSON.parse(this.model.grid)
+    if (typeof this.model.particles === 'string')
+      this.model.particles = JSON.parse(this.model.particles)
+    if (typeof this.model.grid === 'string')
+      this.model.grid = JSON.parse(this.model.grid)
   },
   methods: {
     getFieldConfig(field) {
       return this.columns.find((x) => x.name === field)
     },
     isFieldVisible(field) {
+      console.log(1, this.state, field)
       return this.getFieldConfig(field).form.visible.includes(this.state)
     },
     isFieldEditable(field) {

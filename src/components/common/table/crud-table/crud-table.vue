@@ -103,6 +103,20 @@
             <div class="text-center mr-3">
               <slot name="actions" v-bind="{ row }"></slot>
 
+              <span v-if="showReadButton" class="mr-2">
+                <q-btn
+                  icon="mdi-eye"
+                  flat
+                  dense
+                  round
+                  size="sm"
+                  :disable="loading"
+                  class="text-gray-500"
+                  @click="() => openReadDialog(row)"
+                />
+                <q-tooltip>Details</q-tooltip>
+              </span>
+
               <span v-if="showUpdateButton">
                 <q-btn
                   icon="mdi-pencil"
@@ -110,7 +124,8 @@
                   dense
                   round
                   size="sm"
-                  :disable="!allowUpdate"
+                  :disable="!allowUpdate || loading"
+                  class="text-gray-500"
                   @click="() => openUpdateDialog(row)"
                 />
                 <q-tooltip v-if="!allowUpdate">
@@ -125,26 +140,13 @@
                   dense
                   round
                   size="sm"
-                  :disable="!allowDelete"
+                  :disable="!allowDelete || loading"
+                  class="text-gray-500"
                   @click="() => openDeleteDialog(row)"
                 />
                 <q-tooltip v-if="!allowDelete">
                   You don't have permission for this operation.
                 </q-tooltip>
-              </span>
-
-              <span v-if="showReadButton" class="mr-2">
-                <q-btn
-                  icon="mdi-eye"
-                  flat
-                  dense
-                  round
-                  size="sm"
-                  :disable="loading"
-                  class="text-gray-500"
-                  @click="() => openReadDialog(row)"
-                />
-                <q-tooltip>Details</q-tooltip>
               </span>
             </div>
           </q-td>

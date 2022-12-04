@@ -8,7 +8,7 @@
         v-model="templateName"
         dense
         label="Template name"
-        class="w-28"
+        class="w-48"
       />
       <q-btn
         outline
@@ -23,7 +23,8 @@
         :value="selectedTemplate"
         dense
         label="Load template"
-        class="ml-10 w-36"
+        class="ml-10"
+        style="min-width: 11rem"
         @input="setTemplate"
       >
         <template v-slot:append>
@@ -333,7 +334,6 @@
             label="M☉"
             :rules="getRules('required')"
             :disable="!isFieldEditable('grid')"
-            @input="(v) => inputHandler(model.grid.particle, 'm', v)"
           />
           <q-input
             v-model="model.grid.particle.a"
@@ -439,7 +439,6 @@ export default {
       return this.columns.find((x) => x.name === field)
     },
     isFieldVisible(field) {
-      console.log(1, this.state, field)
       return this.getFieldConfig(field).form.visible.includes(this.state)
     },
     isFieldEditable(field) {

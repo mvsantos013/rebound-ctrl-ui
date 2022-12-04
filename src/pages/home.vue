@@ -5,6 +5,7 @@
       :fetching="loading"
       :refreshing="checkingSimulationsStatus"
       @onCreate="createSimulation"
+      @onDelete="deleteSimulation"
       @onViewLogs="onViewLogs"
       @onDownloadResults="onDownloadResults"
     />
@@ -60,7 +61,7 @@ export default {
     },
   },
   async mounted() {
-    this.fetchSimulations()
+    // this.fetchSimulations()
   },
   beforeDestroy() {
     clearTimeout(this.logsRefreshTimeout)
@@ -172,9 +173,12 @@ export default {
     },
     async deleteSimulation(item) {
       this.loading = true
-      await api.delete('/simulations', { data: item })
-      this.$toast.success('Simulation deleted successfully')
-      this.fetchSimulations()
+      const response = await api.delete(`/simulations/${item.id}`)
+      if (response.ok) {
+        this.$toast.success('Simulation deleted successfully')
+        this.fetchSimulations()
+      }
+      this.loading = false
     },
   },
 }

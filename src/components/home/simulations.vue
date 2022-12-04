@@ -13,9 +13,9 @@
       :columns="columns"
       :loading="fetching"
       :allowCreate="true"
+      :allowDelete="true"
       :showCreateButton="true"
       :showUpdateButton="false"
-      :showDeleteButton="false"
       :pagination="{
         sortBy: 'created_at',
         descending: true,
@@ -23,6 +23,7 @@
         rowsPerPage: 20,
       }"
       @onCreate="(item) => $emit('onCreate', item)"
+      @onDelete="(item) => $emit('onDelete', item)"
     >
       <q-spinner v-if="refreshing" size="sm" color="primary" class="ml-3" />
 
@@ -57,7 +58,7 @@
 
       <!-- Add custom action buttons -->
       <template #actions="{ row }">
-        <span class="mr-2">
+        <span class="mr-1">
           <q-btn
             icon="mdi-text-search-variant"
             flat
@@ -70,7 +71,7 @@
           <q-tooltip>Logs</q-tooltip>
         </span>
 
-        <span class="mr-3">
+        <span class="mr-1">
           <q-btn
             icon="mdi-download-outline"
             flat

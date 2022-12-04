@@ -201,7 +201,11 @@
             />
             <q-btn
               v-if="!isDialogRead"
-              :label="createLabel ? createLabel : labels[state].actionBtn"
+              :label="
+                createLabel && isDialogCreate
+                  ? createLabel
+                  : labels[state].actionBtn
+              "
               :color="
                 isDialogDelete || isDialogMultipleDelete
                   ? 'negative'

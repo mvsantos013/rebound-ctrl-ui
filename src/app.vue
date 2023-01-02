@@ -11,20 +11,30 @@
         :stage="stage"
         :hide-settigns="true"
         @onSectionSelected="onNavSectionSelected"
+        @onOpenConnectionSettings="onOpenConnectionSettings"
       />
       <q-page-container>
         <router-view />
       </q-page-container>
+
+      <ConnectionSettings :open.sync="connectionSettingsOpen" />
     </q-layout>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/common/layout/navbar.vue'
+import ConnectionSettings from '@/components/connection-settings.vue'
 
 export default {
   components: {
     Navbar,
+    ConnectionSettings,
+  },
+  data() {
+    return {
+      connectionSettingsOpen: false,
+    }
   },
   computed: {
     stage: () => process.env.VUE_APP_STAGE || 'dev',
@@ -50,6 +60,9 @@ export default {
       else headersCache[e.header] = true
 
       localStorage.setItem('navbarHeaders', JSON.stringify(headersCache))
+    },
+    onOpenConnectionSettings() {
+      this.connectionSettingsOpen = true
     },
   },
 }

@@ -9,6 +9,13 @@
           ></q-img>
           <div class="text-white text-lg font-bold ml-6">REBOUND CTRL</div>
         </q-toolbar-title>
+
+        <q-btn
+          icon="mdi-connection"
+          flat
+          round
+          @click="$emit('onOpenConnectionSettings')"
+        ></q-btn>
       </q-toolbar>
     </q-header>
   </div>

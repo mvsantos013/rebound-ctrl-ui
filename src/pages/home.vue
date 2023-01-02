@@ -61,7 +61,7 @@ export default {
     },
   },
   async mounted() {
-    // this.fetchSimulations()
+    this.fetchSimulations()
   },
   beforeDestroy() {
     clearTimeout(this.logsRefreshTimeout)
